@@ -11,5 +11,9 @@ class ContactsDataSource {
         fun getContacts(): Flow<List<ContactsEntity>> {
             return contactsLocal.getContacts()
         }
+
+        fun updateContacts(contacts: List<ContactsEntity>) {
+            contactsLocal.updateContacts(contacts)
+        }
     }
 }

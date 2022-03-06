@@ -11,4 +11,8 @@ class ContactsRepository @Inject constructor(
     fun fetchContacts(): Flow<List<ContactsEntity>> {
         return contactsLocal.getContacts()
     }
+
+    fun updateContacts(contacts: List<ContactsEntity>) {
+        contactsLocal.updateContacts(contacts)
+    }
 }

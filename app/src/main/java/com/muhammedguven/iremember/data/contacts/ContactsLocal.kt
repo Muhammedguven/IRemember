@@ -13,4 +13,8 @@ class ContactsLocal @Inject constructor(
         return contactsDao.fetchContacts()
     }
 
+    fun updateContacts(contacts: List<ContactsEntity>) {
+        contactsDao.insertAll(contacts)
+    }
+
 }

@@ -17,4 +17,9 @@ class ContactsUseCase @Inject constructor(
         return contactsRepository.fetchContacts().map { contactsMapper.mapFromResponse(it) }
             .flowOn(Dispatchers.IO)
     }
+
+    fun updateContacts(contacts: List<Contact>) {
+        val newContacts = contactsMapper.mapToResponse(contacts)
+        contactsRepository.updateContacts(newContacts)
+    }
 }

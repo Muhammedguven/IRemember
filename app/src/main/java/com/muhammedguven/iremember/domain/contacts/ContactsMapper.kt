@@ -16,4 +16,14 @@ class ContactsMapper @Inject constructor() {
             )
         }.orEmpty()
     }
+
+    fun mapToResponse(contacts: List<Contact?>?): List<ContactsEntity> {
+        return contacts?.mapNotNull { contact ->
+            ContactsEntity(
+                contactId = contact?.id,
+                contactPhoneNumber = contact?.contactPhoneNumber,
+                contactName = contact?.contactName
+            )
+        }.orEmpty()
+    }
 }

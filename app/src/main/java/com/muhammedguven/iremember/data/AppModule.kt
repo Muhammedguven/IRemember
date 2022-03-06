@@ -23,16 +23,20 @@ class AppModule {
         return application.applicationContext
     }
 
-    @Provides
-    @Singleton
-    fun provideIRememberDatabase(context: Context): IRememberDatabase =
-        Room
-            .databaseBuilder(context, IRememberDatabase::class.java, DB_NAME)
-            .build()
 
     @Provides
     @Singleton
-    internal fun providePreviouslySearchedItemDao(iRememberDatabase: IRememberDatabase): ContactsDao {
+    fun provideIRememberDatabase(context: Context): IRememberDatabase {
+
+        return Room.databaseBuilder(
+            context,
+            IRememberDatabase::class.java, DB_NAME
+        ).allowMainThreadQueries().build()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideContactsDao(iRememberDatabase: IRememberDatabase): ContactsDao {
         return iRememberDatabase.contactsDao
     }
 }

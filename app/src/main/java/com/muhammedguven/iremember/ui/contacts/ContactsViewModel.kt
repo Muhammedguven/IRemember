@@ -34,11 +34,6 @@ class ContactsViewModel @Inject constructor(
     }
 
     private fun onContactListReady(contactList: List<Contact>) {
-        val list = listOf<Contact>(
-            Contact(1L, "123123123", "Ali can"),
-            Contact(1L, "123123123", "Ali can"),
-            Contact(1L, "123123123", "Ali can"),
-        )
-        pageViewStateLiveData.value = ContactsViewState(list)
+        pageViewStateLiveData.value = ContactsViewState(contactList)
     }
 }
