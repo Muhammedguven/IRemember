@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.muhammedguven.iremember.common.extensions.observeNonNull
+import com.muhammedguven.iremember.common.ui.BaseFragment
 import com.muhammedguven.iremember.databinding.FragmentContactsBinding
 import com.muhammedguven.iremember.ui.contacts.model.Contact
 
-class ContactsFragment : Fragment() {
+class ContactsFragment : BaseFragment() {
 
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
@@ -45,7 +45,7 @@ class ContactsFragment : Fragment() {
     }
 
     private fun setUpView() {
-        with(binding.recyclerViewCharacterList) {
+        with(binding.recyclerViewContactList) {
             apply {
                 contactsAdapter = ContactsAdapter()
                 adapter = contactsAdapter.apply {

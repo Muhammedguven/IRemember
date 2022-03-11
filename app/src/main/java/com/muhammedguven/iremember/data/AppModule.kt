@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.muhammedguven.iremember.local.IRememberDatabase
+import com.muhammedguven.iremember.local.dao.CallLogsDao
 import com.muhammedguven.iremember.local.dao.ContactsDao
 import dagger.Module
 import dagger.Provides
@@ -38,5 +39,11 @@ class AppModule {
     @Singleton
     internal fun provideContactsDao(iRememberDatabase: IRememberDatabase): ContactsDao {
         return iRememberDatabase.contactsDao
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideCallLogsDao(iRememberDatabase: IRememberDatabase): CallLogsDao {
+        return iRememberDatabase.callLogsDao
     }
 }
