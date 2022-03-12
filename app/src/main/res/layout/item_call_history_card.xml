@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="callLogItemViewState"
-            type="com.muhammedguven.iremember.ui.home.CallLogItemViewState" />
+            name="callHistoryItemViewState"
+            type="com.muhammedguven.iremember.ui.home.CallHistoryItemViewState" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -32,13 +32,28 @@
                 android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{callLogItemViewState.getId()}"
-                app:layout_constraintBottom_toTopOf="@id/textViewNumber"
+                android:text="@{callHistoryItemViewState.getId()}"
+                app:layout_constraintBottom_toTopOf="@id/textViewName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_goneMarginBottom="8dp"
                 tools:text="User 1" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewName"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                android:textColor="@color/purple_500"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:text="@{callHistoryItemViewState.callHistory.name}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewId"
+                tools:text="user" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textViewNumber"
@@ -51,9 +66,9 @@
                 android:layout_marginEnd="4dp"
                 android:gravity="center_horizontal"
                 android:includeFontPadding="false"
-                android:text="@{callLogItemViewState.callLog.phoneNumber}"
+                android:text="@{callHistoryItemViewState.callHistory.phoneNumber}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewId"
+                app:layout_constraintTop_toBottomOf="@id/textViewName"
                 tools:text="21321412421" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -67,7 +82,7 @@
                 android:layout_marginEnd="4dp"
                 android:gravity="center_horizontal"
                 android:includeFontPadding="false"
-                android:text="@{callLogItemViewState.callLog.type}"
+                android:text="@{callHistoryItemViewState.callHistory.type}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewNumber"
                 tools:text="21321412421" />
@@ -83,7 +98,7 @@
                 android:layout_marginEnd="4dp"
                 android:gravity="center_horizontal"
                 android:includeFontPadding="false"
-                android:text="@{callLogItemViewState.callLog.duration}"
+                android:text="@{callHistoryItemViewState.callHistory.duration}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewType"
                 tools:text="21321412421" />
@@ -99,7 +114,7 @@
                 android:layout_marginEnd="4dp"
                 android:gravity="center_horizontal"
                 android:includeFontPadding="false"
-                android:text="@{callLogItemViewState.callLog.date.toString()}"
+                android:text="@{callHistoryItemViewState.callHistory.date.toString()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewDuration"
                 tools:text="21321412421" />

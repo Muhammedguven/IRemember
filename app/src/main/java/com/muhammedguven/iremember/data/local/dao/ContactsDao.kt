@@ -1,12 +1,11 @@
-package com.muhammedguven.iremember.local.dao
+package com.muhammedguven.iremember.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.muhammedguven.iremember.local.entity.ContactsEntity
+import com.muhammedguven.iremember.data.local.entity.ContactsEntity
 import kotlinx.coroutines.flow.Flow
-
 
 @Dao
 abstract class ContactsDao {

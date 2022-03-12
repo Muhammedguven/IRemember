@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="callLogsViewState"
-            type="com.muhammedguven.iremember.ui.home.CallLogsViewState" />
+            name="callHistoriesViewState"
+            type="com.muhammedguven.iremember.ui.home.CallHistoriesViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

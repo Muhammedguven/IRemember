@@ -25,7 +25,7 @@ class HomeFragment : BaseFragment() {
 
     private val homeViewModel: HomeViewModel by activityViewModels()
 
-    lateinit var callLogsAdapter: CallLogsAdapter
+    lateinit var callHistoriesAdapter: CallHistoriesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,8 +58,8 @@ class HomeFragment : BaseFragment() {
         }
         with(binding.recyclerViewCallLogList) {
             apply {
-                callLogsAdapter = CallLogsAdapter()
-                adapter = callLogsAdapter.apply {
+                callHistoriesAdapter = CallHistoriesAdapter()
+                adapter = callHistoriesAdapter.apply {
                     //itemClickListener = ::navigateCharacterDetailFragment
                 }
                 //addItemDecoration(GridItemDecoration())
@@ -67,29 +67,33 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    private fun renderPageViewState(viewState: CallLogsViewState) {
-        binding.callLogsViewState = viewState
-        callLogsAdapter.submitList(viewState.getCallLogs())
+    private fun renderPageViewState(viewState: CallHistoriesViewState) {
+        binding.callHistoriesViewState = viewState
+        callHistoriesAdapter.submitList(viewState.getCallHistories())
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    private fun setContactsToLocal() {
+        val contacts = getContactFromUserContacts()
+        contacts.isNotEmpty().let {
+            homeViewModel.setContactsToLocal(contacts)
+        }
+    }
+
+    private fun setCallLogsToLocal() {
+        val callLogs = readCallLog()
+        callLogs.isNotEmpty().let {
+            homeViewModel.setCallLogsToLocal(callLogs)
+        }
     }
 
     private fun checkPermissions() {
         if (requireContext().let {
-                ContextCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.READ_CALL_LOG
-                )
+                ContextCompat.checkSelfPermission(it, Manifest.permission.READ_CALL_LOG)
             } != PackageManager.PERMISSION_GRANTED) {
-            Log.d(TAG, "Request Permissions")
             requestMultiplePermissions.launch(PERMISSIONS)
         } else {
-            Log.d(TAG, "Permission Already Granted")
+            setCallLogsToLocal()
+            setContactsToLocal()
         }
     }
 
@@ -100,10 +104,9 @@ class HomeFragment : BaseFragment() {
             }
             if (permissions[PERMISSIONS[0]] == true && permissions[PERMISSIONS[1]] == true) {
                 Log.d(TAG, "Permission granted")
-                val callLogs = readCallLog()
-                homeViewModel.setCallLogsToLocal(callLogs)
-                val contacts = getContactFromUserContacts()
-                homeViewModel.setContactsToLocal(contacts)
+                setCallLogsToLocal()
+                setContactsToLocal()
+
             } else {
                 Log.d(TAG, "Permission not granted")
                 checkPermissions()
