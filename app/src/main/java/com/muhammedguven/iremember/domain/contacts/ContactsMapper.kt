@@ -1,7 +1,7 @@
 package com.muhammedguven.iremember.domain.contacts
 
 import com.muhammedguven.iremember.common.extensions.orZero
-import com.muhammedguven.iremember.local.entity.ContactsEntity
+import com.muhammedguven.iremember.data.local.entity.ContactsEntity
 import com.muhammedguven.iremember.ui.contacts.model.Contact
 import javax.inject.Inject
 
@@ -17,13 +17,21 @@ class ContactsMapper @Inject constructor() {
         }.orEmpty()
     }
 
-    fun mapToResponse(contacts: List<Contact?>?): List<ContactsEntity> {
-        return contacts?.mapNotNull { contact ->
+    fun mapToRequest(contacts: List<Contact>): List<ContactsEntity> {
+        return contacts.map { contact ->
             ContactsEntity(
-                contactId = contact?.id,
-                contactPhoneNumber = contact?.contactPhoneNumber,
-                contactName = contact?.contactName
+                contactId = contact.id,
+                contactPhoneNumber = editPhoneNumber(contact.contactPhoneNumber),
+                contactName = contact.contactName
             )
-        }.orEmpty()
+        }
+    }
+
+    private fun editPhoneNumber(number: String): String {
+        return number
+            .replace("-", "")
+            .replace(" ", "")
+            .replace("(", "")
+            .replace(")", "")
     }
 }

@@ -19,7 +19,7 @@ class CallLogsUseCase @Inject constructor(
     }
 
     fun updateCallLogs(callLogs: List<UserCallLog>) {
-        val newCallLogs = callLogsMapper.mapToResponse(callLogs)
+        val newCallLogs = callLogsMapper.mapToRequest(callLogs)
         callLogsRepository.updateCallLogs(newCallLogs)
     }
 }

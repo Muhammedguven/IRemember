@@ -1,7 +1,7 @@
 package com.muhammedguven.iremember.domain.colllogs
 
 import com.muhammedguven.iremember.common.extensions.orZero
-import com.muhammedguven.iremember.local.entity.CallLogsEntity
+import com.muhammedguven.iremember.data.local.entity.CallLogsEntity
 import com.muhammedguven.iremember.ui.home.model.UserCallLog
 import java.util.Date
 import javax.inject.Inject
@@ -20,15 +20,15 @@ class CallLogsMapper @Inject constructor() {
         }.orEmpty()
     }
 
-    fun mapToResponse(callLogs: List<UserCallLog?>?): List<CallLogsEntity> {
-        return callLogs?.mapNotNull { callLog ->
+    fun mapToRequest(callLogs: List<UserCallLog>): List<CallLogsEntity> {
+        return callLogs.map { callLog ->
             CallLogsEntity(
-                id = callLog?.id.orZero(),
-                phoneNumber = callLog?.phoneNumber.orEmpty(),
-                duration = callLog?.duration.orEmpty(),
-                type = callLog?.type.orEmpty(),
-                date = callLog?.date ?: Date()
+                id = callLog.id,
+                phoneNumber = callLog.phoneNumber,
+                duration = callLog.duration,
+                type = callLog.type,
+                date = callLog.date
             )
-        }.orEmpty()
+        }
     }
 }

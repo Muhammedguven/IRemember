@@ -1,6 +1,7 @@
 package com.muhammedguven.iremember.common.ui
 
 import android.database.Cursor
+import android.net.Uri
 import android.provider.CallLog
 import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
@@ -19,27 +20,38 @@ abstract class BaseFragment : Fragment() {
 
         if (cursor != null && cursor.count > 0) {
             while (cursor.moveToNext()) {
-                val id = cursor.getString(
-                    cursor.getColumnIndex(ContactsContract.Contacts._ID).orZero()
-                )
-                val name = cursor.getString(
-                    cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME).orZero()
-                )
-                val uriPhone = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-                val selection = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?"
-                val phoneCursor =
-                    context?.contentResolver?.query(uriPhone, null, selection, arrayOf(id), null)
+                val idColumn: Int? = cursor.getColumnIndex(ContactsContract.Contacts._ID)
+                val nameColumn: Int? = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+                val uriColumn: Uri? = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+                val selectionColumn: String? =
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?"
 
-                if (phoneCursor!!.moveToNext()) {
-                    val number =
-                        phoneCursor.getString(
-                            phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                                .orZero()
+                if (idColumn != null && nameColumn != null && uriColumn != null) {
+                    val id: String = cursor.getString(idColumn)
+                    val name = cursor.getString(nameColumn)
+                    val phoneCursor =
+                        context?.contentResolver?.query(
+                            uriColumn,
+                            null,
+                            selectionColumn,
+                            arrayOf(id),
+                            null
                         )
-                    val contact =
-                        Contact(id = id.toLong(), contactName = name, contactPhoneNumber = number)
-                    contacts.add(contact)
-                    phoneCursor.close()
+                    if (phoneCursor != null && phoneCursor.moveToNext()) {
+                        val number =
+                            phoneCursor.getString(
+                                phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                                    .orZero()
+                            )
+                        contacts.add(
+                            Contact(
+                                id = id.toLong(),
+                                contactName = name,
+                                contactPhoneNumber = number
+                            )
+                        )
+                        phoneCursor.close()
+                    }
                 }
             }
             cursor.close()
@@ -60,18 +72,12 @@ abstract class BaseFragment : Fragment() {
         val callLogs: MutableList<UserCallLog> = mutableListOf()
 
         while (cursor.moveToNext()) {
-            val phoneNumber = cursor.getString(callNumber)
-            val callType = cursor.getString(callType)
-            val date = cursor.getString(callDate)
-            val callDayTime = Date(java.lang.Long.valueOf(date))
-            val duration = cursor.getString(callDuration)
-            val id = cursor.getString(callId).toInt()
-            var type = ""
-            when (callType.toInt()) {
-                CallLog.Calls.OUTGOING_TYPE -> type = "OUTGOING"
-                CallLog.Calls.INCOMING_TYPE -> type = "INCOMING"
-                CallLog.Calls.MISSED_TYPE -> type = "MISSED"
-            }
+            val id: Int = cursor.getString(callId).toInt()
+            val phoneNumber: String = cursor.getString(callNumber)
+            val typeOfCall: Int = cursor.getString(callType).toInt()
+            val date: Date = Date(java.lang.Long.valueOf(cursor.getString(callDate)))
+            val duration: String = cursor.getString(callDuration)
+            val type = turnCallType(typeOfCall)
 
             callLogs.add(
                 UserCallLog(
@@ -79,15 +85,21 @@ abstract class BaseFragment : Fragment() {
                     phoneNumber = phoneNumber,
                     duration = duration,
                     type = type,
-                    date = callDayTime
+                    date = date
                 )
             )
         }
-        /* for (i in callLogs){
-             Log.d("MY_APP", "${i.id},${i.phoneNumber}, ${i.duration},${i.type},${i.date}")
-         }*/
         cursor.close()
         return callLogs
+    }
+
+    private fun turnCallType(typeOfCall: Int): String {
+        return when (typeOfCall) {
+            CallLog.Calls.OUTGOING_TYPE -> "OUTGOING"
+            CallLog.Calls.INCOMING_TYPE -> "INCOMING"
+            CallLog.Calls.MISSED_TYPE -> "MISSED"
+            else -> "UNKNOWN"
+        }
     }
 
 }

@@ -3,9 +3,9 @@ package com.muhammedguven.iremember.data
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.muhammedguven.iremember.local.IRememberDatabase
-import com.muhammedguven.iremember.local.dao.CallLogsDao
-import com.muhammedguven.iremember.local.dao.ContactsDao
+import com.muhammedguven.iremember.data.local.IRememberDatabase
+import com.muhammedguven.iremember.data.local.dao.CallLogsDao
+import com.muhammedguven.iremember.data.local.dao.ContactsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

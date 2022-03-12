@@ -1,6 +1,6 @@
 package com.muhammedguven.iremember.data.calllogs
 
-import com.muhammedguven.iremember.local.entity.CallLogsEntity
+import com.muhammedguven.iremember.data.local.entity.CallLogsEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

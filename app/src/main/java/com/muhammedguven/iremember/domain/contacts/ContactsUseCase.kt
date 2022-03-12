@@ -19,7 +19,7 @@ class ContactsUseCase @Inject constructor(
     }
 
     fun updateContacts(contacts: List<Contact>) {
-        val newContacts = contactsMapper.mapToResponse(contacts)
+        val newContacts = contactsMapper.mapToRequest(contacts)
         contactsRepository.updateContacts(newContacts)
     }
 }

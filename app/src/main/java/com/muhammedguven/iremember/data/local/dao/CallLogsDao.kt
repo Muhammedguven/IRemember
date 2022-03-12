@@ -1,10 +1,10 @@
-package com.muhammedguven.iremember.local.dao
+package com.muhammedguven.iremember.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.muhammedguven.iremember.local.entity.CallLogsEntity
+import com.muhammedguven.iremember.data.local.entity.CallLogsEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

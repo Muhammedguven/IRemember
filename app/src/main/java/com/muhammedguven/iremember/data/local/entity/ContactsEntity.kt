@@ -1,4 +1,4 @@
-package com.muhammedguven.iremember.local.entity
+package com.muhammedguven.iremember.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
