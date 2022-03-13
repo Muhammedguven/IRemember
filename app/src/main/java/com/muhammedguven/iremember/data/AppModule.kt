@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.muhammedguven.iremember.data.local.IRememberDatabase
 import com.muhammedguven.iremember.data.local.dao.CallLogsDao
 import com.muhammedguven.iremember.data.local.dao.ContactsDao
+import com.muhammedguven.iremember.data.local.dao.ReminderDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,4 +47,11 @@ class AppModule {
     internal fun provideCallLogsDao(iRememberDatabase: IRememberDatabase): CallLogsDao {
         return iRememberDatabase.callLogsDao
     }
+
+    @Provides
+    @Singleton
+    internal fun provideReminderDao(iRememberDatabase: IRememberDatabase): ReminderDao {
+        return iRememberDatabase.reminderDao
+    }
+
 }

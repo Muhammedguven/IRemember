@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.muhammedguven.iremember.common.extensions.observeNonNull
 import com.muhammedguven.iremember.common.ui.BaseFragment
 import com.muhammedguven.iremember.databinding.FragmentContactsBinding
@@ -49,7 +50,7 @@ class ContactsFragment : BaseFragment() {
             apply {
                 contactsAdapter = ContactsAdapter()
                 adapter = contactsAdapter.apply {
-                    //itemClickListener = ::navigateCharacterDetailFragment
+                    itemClickListener = ::navigateCreateReminderFragment
                 }
                 //addItemDecoration(GridItemDecoration())
             }
@@ -61,8 +62,13 @@ class ContactsFragment : BaseFragment() {
         contactsAdapter.submitList(viewState.getContacts())
     }
 
-    private fun navigateCharacterDetailFragment(contact: Contact) {
-        // findNavController().navigate(ContactListFragmentDirections.openCharacterDetail(contact.id))
+    private fun navigateCreateReminderFragment(contact: Contact) {
+        findNavController().navigate(
+            ContactsFragmentDirections.openCreateReminderFragment(
+                contact.contactName,
+                contact.contactPhoneNumber
+            )
+        )
     }
 
     override fun onDestroyView() {

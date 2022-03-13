@@ -16,6 +16,22 @@
     <fragment
         android:id="@+id/contactsFragment"
         android:name="com.muhammedguven.iremember.ui.contacts.ContactsFragment"
-        android:label="ContactsFragment"></fragment>
+        android:label="ContactsFragment">
+        <action
+            android:id="@+id/openCreateReminderFragment"
+            app:destination="@+id/createReminderFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createReminderFragment"
+        android:name="com.muhammedguven.iremember.ui.createreminder.CreateReminderFragment"
+        android:label="CreateReminderFragment">
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

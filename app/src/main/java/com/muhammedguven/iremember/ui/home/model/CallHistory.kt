@@ -8,5 +8,6 @@ data class CallHistory(
     val phoneNumber: String,
     val duration: String,
     val type: String,
-    val date: Date
+    val date: Date,
+    val remainingTime: Long
 )
