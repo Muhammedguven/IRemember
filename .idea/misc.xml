@@ -7,7 +7,9 @@
         <entry key="app/src/main/res/font/font_montserrat.xml" value="0.15833333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/layout/fragment_contacts.xml" value="0.2953125" />
+        <entry key="app/src/main/res/layout/fragment_create_reminder.xml" value="0.3234375" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2953125" />
+        <entry key="app/src/main/res/layout/item_call_history_card.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/item_call_logs_card.xml" value="0.3775263468424479" />
         <entry key="app/src/main/res/layout/item_contact_card.xml" value="0.2953125" />
         <entry key="app/src/main/res/menu/contact_menu.xml" value="0.3640625" />

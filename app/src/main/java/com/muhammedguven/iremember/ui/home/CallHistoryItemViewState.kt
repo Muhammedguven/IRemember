@@ -7,4 +7,6 @@ class CallHistoryItemViewState(
 ) {
 
     fun getId() = callHistory.id.toString()
+
+    fun getRemainingTime() = callHistory.remainingTime.toString() + " gün kaldı"
 }
