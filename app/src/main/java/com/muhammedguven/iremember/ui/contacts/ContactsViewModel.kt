@@ -3,37 +3,23 @@ package com.muhammedguven.iremember.ui.contacts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.muhammedguven.iremember.domain.contacts.ContactsUseCase
-import com.muhammedguven.iremember.ui.contacts.model.Contact
+import com.muhammedguven.iremember.ui.model.Contact
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ContactsViewModel @Inject constructor(
-    private val useCase: ContactsUseCase
-) : ViewModel() {
+class ContactsViewModel @Inject constructor() : ViewModel() {
 
     private val pageViewStateLiveData: MutableLiveData<ContactsViewState> = MutableLiveData()
 
     fun getPageViewStateLiveData(): LiveData<ContactsViewState> = pageViewStateLiveData
 
-    fun initializeViewModel() {
-        fetchContacts()
+    fun initializeViewModel(contacts: List<Contact>) {
+        fetchContacts(contacts)
     }
 
-    fun fetchContacts() {
-        viewModelScope.launch {
-            useCase
-                .fetchContacts()
-                .collect {
-                    onContactListReady(it)
-                }
-        }
+    private fun fetchContacts(contacts: List<Contact>) {
+        pageViewStateLiveData.value = ContactsViewState(contacts)
     }
 
-    private fun onContactListReady(contactList: List<Contact>) {
-        pageViewStateLiveData.value = ContactsViewState(contactList)
-    }
 }

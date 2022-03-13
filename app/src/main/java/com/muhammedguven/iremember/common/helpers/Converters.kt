@@ -1,16 +1,21 @@
 package com.muhammedguven.iremember.common.helpers
 
 import androidx.room.TypeConverter
-import java.util.Date
+import java.time.LocalDate
 
 class Converters {
     @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return value?.let { Date(it) }
+    fun toDate(dateString: String?): LocalDate? {
+        return if (dateString == null) {
+            null
+        } else {
+            LocalDate.parse(dateString)
+        }
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
+    fun toDateString(date: LocalDate?): String? {
+        return date?.toString()
     }
+
 }

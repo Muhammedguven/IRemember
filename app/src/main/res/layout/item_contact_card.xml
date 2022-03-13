@@ -32,7 +32,7 @@
                 android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{contactItemViewState.contact.contactName}"
+                android:text="@{contactItemViewState.name}"
                 app:layout_constraintBottom_toTopOf="@id/textViewGender"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
                 android:layout_marginEnd="4dp"
                 android:gravity="center_horizontal"
                 android:includeFontPadding="false"
-                android:text="@{contactItemViewState.contact.contactPhoneNumber}"
+                android:text="@{contactItemViewState.phoneNumber}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewGender"
                 tools:text="21321412421" />

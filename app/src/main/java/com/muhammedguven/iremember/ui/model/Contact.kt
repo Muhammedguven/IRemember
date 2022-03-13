@@ -1,7 +1,6 @@
-package com.muhammedguven.iremember.ui.contacts.model
+package com.muhammedguven.iremember.ui.model
 
 data class Contact(
-    val id: Long,
     val contactPhoneNumber: String,
     val contactName: String
 )

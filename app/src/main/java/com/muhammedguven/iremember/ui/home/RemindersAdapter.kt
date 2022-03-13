@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.muhammedguven.iremember.databinding.ItemCallHistoryCardBinding
-import com.muhammedguven.iremember.ui.home.model.CallHistory
+import com.muhammedguven.iremember.databinding.ItemReminderCardBinding
+import com.muhammedguven.iremember.ui.model.Reminder
 
-class CallHistoriesAdapter :
-    ListAdapter<CallHistory, CallHistoriesAdapter.CallHistoriesHolder>(DIFF_CALLBACK) {
+class RemindersAdapter :
+    ListAdapter<Reminder, RemindersAdapter.CallHistoriesHolder>(DIFF_CALLBACK) {
 
-    var itemClickListener: (CallHistory) -> Unit = {}
+    var itemClickListener: (Reminder) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CallHistoriesHolder {
-        val binding = ItemCallHistoryCardBinding.inflate(
+        val binding = ItemReminderCardBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -23,13 +23,13 @@ class CallHistoriesAdapter :
     }
 
     class CallHistoriesHolder(
-        private val binding: ItemCallHistoryCardBinding,
-        private val itemClickListener: (CallHistory) -> Unit
+        private val binding: ItemReminderCardBinding,
+        private val itemClickListener: (Reminder) -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(callHistory: CallHistory) {
-            binding.callHistoryItemViewState = CallHistoryItemViewState(callHistory)
+        fun bind(callHistory: Reminder) {
+            binding.reminderItemViewState = ReminderItemViewState(callHistory)
 
             binding.root.setOnClickListener {
                 itemClickListener(callHistory)
@@ -42,11 +42,11 @@ class CallHistoriesAdapter :
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CallHistory>() {
-            override fun areItemsTheSame(oldItem: CallHistory, newItem: CallHistory) =
-                oldItem.id == newItem.id
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Reminder>() {
+            override fun areItemsTheSame(oldItem: Reminder, newItem: Reminder) =
+                oldItem.phoneNumber == newItem.phoneNumber
 
-            override fun areContentsTheSame(oldItem: CallHistory, newItem: CallHistory) =
+            override fun areContentsTheSame(oldItem: Reminder, newItem: Reminder) =
                 oldItem == newItem
         }
     }

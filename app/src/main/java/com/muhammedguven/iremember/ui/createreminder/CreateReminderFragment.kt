@@ -10,6 +10,8 @@ import androidx.navigation.fragment.navArgs
 import com.muhammedguven.iremember.common.extensions.observeNonNull
 import com.muhammedguven.iremember.common.ui.BaseFragment
 import com.muhammedguven.iremember.databinding.FragmentCreateReminderBinding
+import com.muhammedguven.iremember.ui.model.Reminder
+import java.time.LocalDate
 
 class CreateReminderFragment : BaseFragment() {
 
@@ -44,12 +46,22 @@ class CreateReminderFragment : BaseFragment() {
             initializeViewModel()
         }
         binding.buttonSetReminder.setOnClickListener {
-            createReminderViewModel.setReminder(
-                args.phoneNumber.toString(),
-                binding.editTextReminderPeriod.text.toString()
-            )
+            createReminder()
             findNavController().popBackStack()
         }
+    }
+
+    private fun createReminder() {
+        createReminderViewModel.setReminder(
+            Reminder(
+                phoneNumber = args.phoneNumber,
+                name = args.name,
+                lastCallDate = LocalDate.now(),
+                dayInterval = binding.editTextReminderPeriod.text.toString().toInt(),
+                isActive = true,
+                callType = ""
+            )
+        )
     }
 
     private fun setUpView() {

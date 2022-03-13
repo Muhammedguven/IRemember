@@ -12,8 +12,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.muhammedguven.iremember.common.extensions.observeNonNull
+import com.muhammedguven.iremember.common.helpers.SpacingItemDecoration
 import com.muhammedguven.iremember.common.ui.BaseFragment
 import com.muhammedguven.iremember.databinding.FragmentHomeBinding
+import com.muhammedguven.iremember.ui.contacts.ContactsFragmentDirections
+import com.muhammedguven.iremember.ui.model.Reminder
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -25,7 +28,7 @@ class HomeFragment : BaseFragment() {
 
     private val homeViewModel: HomeViewModel by activityViewModels()
 
-    lateinit var callHistoriesAdapter: CallHistoriesAdapter
+    lateinit var remindersAdapter: RemindersAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,29 +61,38 @@ class HomeFragment : BaseFragment() {
         }
         with(binding.recyclerViewCallLogList) {
             apply {
-                callHistoriesAdapter = CallHistoriesAdapter()
-                adapter = callHistoriesAdapter.apply {
-                    //itemClickListener = ::navigateCharacterDetailFragment
+                remindersAdapter = RemindersAdapter()
+                adapter = remindersAdapter.apply {
+                    itemClickListener = ::navigateCreateReminderFragment
                 }
-                //addItemDecoration(GridItemDecoration())
+                addItemDecoration(
+                    SpacingItemDecoration(
+                        binding.root.context,
+                        marginValue = 8,
+                        displayMode = SpacingItemDecoration.VERTICAL
+                    )
+                )
             }
         }
     }
 
-    private fun renderPageViewState(viewState: CallHistoriesViewState) {
-        binding.callHistoriesViewState = viewState
-        callHistoriesAdapter.submitList(viewState.getCallHistories())
+    private fun navigateCreateReminderFragment(reminder: Reminder) {
+        findNavController().navigate(
+            ContactsFragmentDirections.openCreateReminderFragment(
+                reminder.name,
+                reminder.phoneNumber,
+            )
+        )
     }
 
-    private fun setContactsToLocal() {
-        val contacts = getContactFromUserContacts()
-        contacts.isNotEmpty().let {
-            homeViewModel.setContactsToLocal(contacts)
-        }
+    private fun renderPageViewState(viewState: RemindersViewState) {
+        binding.callHistoriesViewState = viewState
+        remindersAdapter.submitList(viewState.getReminders())
     }
 
     private fun setCallLogsToLocal() {
         val callLogs = readCallLog()
+
         callLogs.isNotEmpty().let {
             homeViewModel.setCallLogsToLocal(callLogs)
         }
@@ -93,7 +105,6 @@ class HomeFragment : BaseFragment() {
             requestMultiplePermissions.launch(PERMISSIONS)
         } else {
             setCallLogsToLocal()
-            setContactsToLocal()
         }
     }
 
@@ -105,7 +116,6 @@ class HomeFragment : BaseFragment() {
             if (permissions[PERMISSIONS[0]] == true && permissions[PERMISSIONS[1]] == true) {
                 Log.d(TAG, "Permission granted")
                 setCallLogsToLocal()
-                setContactsToLocal()
 
             } else {
                 Log.d(TAG, "Permission not granted")

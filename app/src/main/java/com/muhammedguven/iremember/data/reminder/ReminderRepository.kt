@@ -1,4 +1,4 @@
-package com.muhammedguven.iremember.data.createreminder
+package com.muhammedguven.iremember.data.reminder
 
 import com.muhammedguven.iremember.data.local.entity.ReminderEntity
 import kotlinx.coroutines.flow.Flow
@@ -8,8 +8,12 @@ class ReminderRepository @Inject constructor(
     private val reminderLocal: ReminderDataSource.Local
 ) {
 
-    fun setReminder(phoneNumber: String, period: String) {
-        reminderLocal.setReminder(phoneNumber, period)
+    fun setAllReminder(reminders: List<ReminderEntity>) {
+        reminderLocal.setAllReminder(reminders)
+    }
+
+    fun setReminder(reminderEntity: ReminderEntity) {
+        reminderLocal.setReminder(reminderEntity)
     }
 
     fun fetchReminders(): Flow<List<ReminderEntity>> {

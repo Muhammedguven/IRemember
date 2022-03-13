@@ -4,8 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.muhammedguven.iremember.data.local.IRememberDatabase
-import com.muhammedguven.iremember.data.local.dao.CallLogsDao
-import com.muhammedguven.iremember.data.local.dao.ContactsDao
 import com.muhammedguven.iremember.data.local.dao.ReminderDao
 import dagger.Module
 import dagger.Provides
@@ -34,18 +32,6 @@ class AppModule {
             context,
             IRememberDatabase::class.java, DB_NAME
         ).allowMainThreadQueries().build()
-    }
-
-    @Provides
-    @Singleton
-    internal fun provideContactsDao(iRememberDatabase: IRememberDatabase): ContactsDao {
-        return iRememberDatabase.contactsDao
-    }
-
-    @Provides
-    @Singleton
-    internal fun provideCallLogsDao(iRememberDatabase: IRememberDatabase): CallLogsDao {
-        return iRememberDatabase.callLogsDao
     }
 
     @Provides
