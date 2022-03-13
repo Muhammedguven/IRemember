@@ -1,8 +1,8 @@
 package com.muhammedguven.iremember.ui.contacts
 
-import com.muhammedguven.iremember.ui.contacts.model.Contact
+import com.muhammedguven.iremember.ui.model.Contact
 
-class ContactsViewState(private val contacts: List<Contact>) {
+data class ContactsViewState(private val contacts: List<Contact>) {
 
-    fun getContacts(): List<Contact> = contacts
+    fun getContacts() = contacts
 }

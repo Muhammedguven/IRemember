@@ -6,10 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.muhammedguven.iremember.databinding.ItemContactCardBinding
-import com.muhammedguven.iremember.ui.contacts.model.Contact
+import com.muhammedguven.iremember.ui.model.Contact
 
-class ContactsAdapter :
-    ListAdapter<Contact, ContactsAdapter.ContactsHolder>(DIFF_CALLBACK) {
+class ContactsAdapter : ListAdapter<Contact, ContactsAdapter.ContactsHolder>(DIFF_CALLBACK) {
 
     var itemClickListener: (Contact) -> Unit = {}
 
@@ -44,7 +43,7 @@ class ContactsAdapter :
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Contact>() {
             override fun areItemsTheSame(oldItem: Contact, newItem: Contact) =
-                oldItem.id == newItem.id
+                oldItem.contactPhoneNumber == newItem.contactPhoneNumber
 
             override fun areContentsTheSame(oldItem: Contact, newItem: Contact) =
                 oldItem == newItem

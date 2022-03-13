@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/layout/item_call_history_card.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/item_call_logs_card.xml" value="0.3775263468424479" />
         <entry key="app/src/main/res/layout/item_contact_card.xml" value="0.2953125" />
+        <entry key="app/src/main/res/layout/item_reminder_card.xml" value="0.31614583333333335" />
         <entry key="app/src/main/res/menu/contact_menu.xml" value="0.3640625" />
       </map>
     </option>

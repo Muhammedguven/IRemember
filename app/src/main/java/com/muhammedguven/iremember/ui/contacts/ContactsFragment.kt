@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.muhammedguven.iremember.common.extensions.observeNonNull
+import com.muhammedguven.iremember.common.helpers.SpacingItemDecoration
 import com.muhammedguven.iremember.common.ui.BaseFragment
 import com.muhammedguven.iremember.databinding.FragmentContactsBinding
-import com.muhammedguven.iremember.ui.contacts.model.Contact
+import com.muhammedguven.iremember.ui.model.Contact
 
 class ContactsFragment : BaseFragment() {
 
@@ -41,7 +42,9 @@ class ContactsFragment : BaseFragment() {
             getPageViewStateLiveData().observeNonNull(viewLifecycleOwner) {
                 renderPageViewState(it)
             }
-            initializeViewModel()
+
+            val contacts = getContactFromUserContacts()
+            initializeViewModel(contacts)
         }
     }
 
@@ -52,13 +55,19 @@ class ContactsFragment : BaseFragment() {
                 adapter = contactsAdapter.apply {
                     itemClickListener = ::navigateCreateReminderFragment
                 }
-                //addItemDecoration(GridItemDecoration())
+                addItemDecoration(
+                    SpacingItemDecoration(
+                        binding.root.context,
+                        marginValue = 8,
+                        displayMode = SpacingItemDecoration.VERTICAL
+                    )
+                )
             }
         }
     }
 
     private fun renderPageViewState(viewState: ContactsViewState) {
-        binding.contactsViewState = viewState
+        binding.viewState = viewState
         contactsAdapter.submitList(viewState.getContacts())
     }
 

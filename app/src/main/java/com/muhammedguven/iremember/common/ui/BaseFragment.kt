@@ -6,8 +6,10 @@ import android.provider.CallLog
 import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 import com.muhammedguven.iremember.common.extensions.orZero
-import com.muhammedguven.iremember.ui.contacts.model.Contact
-import com.muhammedguven.iremember.ui.home.model.UserCallLog
+import com.muhammedguven.iremember.ui.model.Contact
+import com.muhammedguven.iremember.ui.model.UserCallLog
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.Date
 
 abstract class BaseFragment : Fragment() {
@@ -45,9 +47,8 @@ abstract class BaseFragment : Fragment() {
                             )
                         contacts.add(
                             Contact(
-                                id = id.toLong(),
                                 contactName = name,
-                                contactPhoneNumber = number
+                                contactPhoneNumber = editPhoneNumber(number)
                             )
                         )
                         phoneCursor.close()
@@ -57,6 +58,14 @@ abstract class BaseFragment : Fragment() {
             cursor.close()
         }
         return contacts
+    }
+
+    private fun editPhoneNumber(number: String): String {
+        return number
+            .replace("-", "")
+            .replace(" ", "")
+            .replace("(", "")
+            .replace(")", "")
     }
 
     fun readCallLog(): List<UserCallLog> {
@@ -81,16 +90,20 @@ abstract class BaseFragment : Fragment() {
 
             callLogs.add(
                 UserCallLog(
-                    id = id,
                     phoneNumber = phoneNumber,
-                    duration = duration,
                     type = type,
-                    date = date
+                    date = convertToLocalDateViaInstant(date) ?: LocalDate.now()
                 )
             )
         }
         cursor.close()
         return callLogs
+    }
+
+    private fun convertToLocalDateViaInstant(dateToConvert: Date): LocalDate? {
+        return dateToConvert.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
     }
 
     private fun turnCallType(typeOfCall: Int): String {

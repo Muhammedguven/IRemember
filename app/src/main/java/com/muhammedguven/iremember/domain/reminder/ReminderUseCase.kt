@@ -1,7 +1,8 @@
 package com.muhammedguven.iremember.domain.reminder
 
-import com.muhammedguven.iremember.data.createreminder.ReminderRepository
-import com.muhammedguven.iremember.ui.createreminder.model.Reminder
+import com.muhammedguven.iremember.data.reminder.ReminderRepository
+import com.muhammedguven.iremember.ui.model.Reminder
+import com.muhammedguven.iremember.ui.model.UserCallLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -10,20 +11,22 @@ import javax.inject.Inject
 
 class ReminderUseCase @Inject constructor(
     private val reminderRepository: ReminderRepository,
+    private val reminderMapper: ReminderMapper
 ) {
 
-    fun setReminder(phoneNumber: String, period: String) {
-        reminderRepository.setReminder(phoneNumber, period)
+    fun setAllReminder(callLogs: List<UserCallLog>) {
+        val entities = reminderMapper.mapAllToDatabase(callLogs)
+        reminderRepository.setAllReminder(entities)
     }
 
-    fun fetchReminders(): Flow<List<Reminder>> {
+    fun setReminder(reminder: Reminder) {
+        val entity = reminderMapper.mapToDatabase(reminder)
+        reminderRepository.setReminder(entity)
+    }
+
+    fun fetchReminders(): Flow<List<Reminder?>> {
         return reminderRepository.fetchReminders().map {
-            it.mapNotNull { entity ->
-                Reminder(
-                    phoneNumber = entity.phoneNumber,
-                    period = entity.period.orEmpty()
-                )
-            }
+            reminderMapper.mapFromDatabase(it)
         }.flowOn(Dispatchers.IO)
     }
 }

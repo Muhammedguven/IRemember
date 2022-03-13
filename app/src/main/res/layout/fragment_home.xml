@@ -6,7 +6,7 @@
 
         <variable
             name="callHistoriesViewState"
-            type="com.muhammedguven.iremember.ui.home.CallHistoriesViewState" />
+            type="com.muhammedguven.iremember.ui.home.RemindersViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
