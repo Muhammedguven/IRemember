@@ -11,6 +11,9 @@
         <action
             android:id="@+id/openContactsFragment"
             app:destination="@+id/contactsFragment" />
+        <action
+            android:id="@+id/openReminderActionsDialogFragment"
+            app:destination="@+id/reminderActionsDialogFragment" />
     </fragment>
 
     <fragment
@@ -33,5 +36,20 @@
             android:name="phoneNumber"
             app:argType="string" />
     </fragment>
+
+    <dialog
+        android:id="@+id/reminderActionsDialogFragment"
+        android:name="com.muhammedguven.iremember.ui.reminderactions.ReminderActionsDialogFragment"
+        android:label="ReminderActionsDialogFragment">
+        <action
+            android:id="@+id/openCreateReminderFragmentForEdit"
+            app:destination="@+id/createReminderFragment" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+    </dialog>
 
 </navigation>

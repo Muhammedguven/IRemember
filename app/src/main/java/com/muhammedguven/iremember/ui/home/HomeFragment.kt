@@ -15,7 +15,6 @@ import com.muhammedguven.iremember.common.extensions.observeNonNull
 import com.muhammedguven.iremember.common.helpers.SpacingItemDecoration
 import com.muhammedguven.iremember.common.ui.BaseFragment
 import com.muhammedguven.iremember.databinding.FragmentHomeBinding
-import com.muhammedguven.iremember.ui.contacts.ContactsFragmentDirections
 import com.muhammedguven.iremember.ui.model.Reminder
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -63,7 +62,7 @@ class HomeFragment : BaseFragment() {
             apply {
                 remindersAdapter = RemindersAdapter()
                 adapter = remindersAdapter.apply {
-                    itemClickListener = ::navigateCreateReminderFragment
+                    itemClickListener = ::navigateReminderActionsDialogFragment
                 }
                 addItemDecoration(
                     SpacingItemDecoration(
@@ -76,9 +75,9 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    private fun navigateCreateReminderFragment(reminder: Reminder) {
+    private fun navigateReminderActionsDialogFragment(reminder: Reminder) {
         findNavController().navigate(
-            ContactsFragmentDirections.openCreateReminderFragment(
+            HomeFragmentDirections.openReminderActionsDialogFragment(
                 reminder.name,
                 reminder.phoneNumber,
             )
@@ -87,6 +86,7 @@ class HomeFragment : BaseFragment() {
 
     private fun renderPageViewState(viewState: RemindersViewState) {
         binding.callHistoriesViewState = viewState
+        remindersAdapter.submitList(listOf())
         remindersAdapter.submitList(viewState.getReminders())
     }
 
