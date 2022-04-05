@@ -29,4 +29,12 @@ class ReminderUseCase @Inject constructor(
             reminderMapper.mapFromDatabase(it)
         }.flowOn(Dispatchers.IO)
     }
+
+    fun deleteReminder(number: String) {
+        reminderRepository.deleteReminder(number)
+    }
+
+    fun resetReminder(number: String) {
+        reminderRepository.resetReminder(number)
+    }
 }

@@ -35,9 +35,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onCallHistoriesReady(reminder: List<Reminder?>) {
-        if (reminder.isNotEmpty()) {
             pageViewStateLiveData.value = RemindersViewState(reminder)
-        }
     }
 
     fun setCallLogsToLocal(callLogs: List<UserCallLog>) {

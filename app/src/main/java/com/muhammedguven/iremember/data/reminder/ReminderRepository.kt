@@ -19,4 +19,12 @@ class ReminderRepository @Inject constructor(
     fun fetchReminders(): Flow<List<ReminderEntity>> {
         return reminderLocal.fetchReminders()
     }
+
+    fun deleteReminder(number: String) {
+        reminderLocal.deleteReminder(number)
+    }
+
+    fun resetReminder(number: String) {
+        reminderLocal.resetReminder(number)
+    }
 }
